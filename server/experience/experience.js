@@ -1,5 +1,5 @@
 const express = require("express")
-const Experience = require('../models')
+const Experience = require('../models/Experience')
 
 const router = express.Router()
 
@@ -43,10 +43,39 @@ router.get('/:id', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
     try {
-        const updatedExperience = await Experience.findOneByIdAndUpdate(id, req.body, {new: true, runVal})
+        const updatedExperience = await Experience.findOneByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+        if(!updatedExperience){
+            return res.status(404).json({Message: "Error finding the experience to update!!"})
+        }
+
+        return res.status(200).json(updatedExperience)
     } catch (error) {
+
+        console.error({message: "Server error while trying to update the experience!!", error})
+
+        return res.status(500).json(error.message)
         
     }
 })
 
-router.post('/delete/:id', async (req, res) => {})
+router.post('/delete/:id', async (req, res) => {
+    try{
+        const deleteExperience = await Experience.findByIdAndDelete(req.params.id)
+        
+        console.log(req)
+
+        if(!deleteExperience){
+            return res.status(404).json({Message: "Error finding the experience to delete!!"})
+        }
+
+        return res.status(200).json({Message: "Sucessfully deleted the experience!!"})
+    }catch(error){
+        console.error({Error: "Server while tring to delete an experience!!"})
+
+        return res.status(500).json(error.message)
+    }
+})
+
+
+module.exports = router

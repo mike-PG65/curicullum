@@ -23,10 +23,11 @@ const runServer = async () => {
 runServer()
 
 const educationRoutes = require("./education/education")
+const experienceRoutes = require("./experience/experience")
 
 
 app.use("/api/education", educationRoutes);
-
+app.use("/api/experience", experienceRoutes);
 
 
 
