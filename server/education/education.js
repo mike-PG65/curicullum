@@ -5,11 +5,19 @@ const router = express.Router();
 
 router.post("/add", async (req, res) => {
     try {
+
+        const existingEducation = await Education.findOne({institution: req.body.institution})
+
+        if(existingEducation){
+            return res.status(409).json({error: "Education already exists!!"})
+        }
+
         const education = await Education.create(req.body);
-        return res.status(201).json(education);
+
+        return res.status(201).json({message: "Education added sucessfully", education});
     } catch (err) {
-        console.error(error)
-        res.status(400).json({ message: err.message });
+        console.error(err)
+        res.status(400).json({ error: err.message });
     }
 
 })
@@ -66,22 +74,22 @@ router.put('/edit/:id', async (req, res) => {
 
          console.error({Error: error});
 
-        return res.status(500).json({ message: error.message})        
+        return res.status(500).json({ error: error.message})        
     }
 });
 
 router.delete('/delete/:id', async (req, res) => {
     try {
-        const deleteEducation = await Education.findByIdAndDelete(id)
+        const deleteEducation = await Education.findByIdAndDelete(req.params.id)
 
         if(!deleteEducation){
             return res.status(404).json({ message: "Education to delete not found!!"})
         }
 
-        return res.status(200).json({ message: "Education to deleted sucessefully!!"})
-    } catch (error) {
-         console.error(error);
-        return res.status(404).json({ message: error.message})        
+        return res.status(200).json({ message: "Education to deleted sucessefully"})
+    } catch (err) {
+         console.err(err);
+        return res.status(404).json({ error: err.message})        
     }
 })
 module.exports = router

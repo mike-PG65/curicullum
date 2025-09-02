@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     return (
         <nav
-            className={`h-screen  bg-teal-600 px-4 py-6 flex flex-col gap-8 shadow-lg fixed left-0 top-0 transition-all duration-300
+            className={`h-screen  bg-teal-600 px-4 py-6 z-50 flex flex-col gap-8 shadow-lg fixed left-0 top-0 transition-all duration-300
         ${isCollapsed ? "w-20" : "w-64"}`}
         >
             {/* Toggle Button */}
@@ -36,8 +36,13 @@ const Navbar = () => {
                 </div>
                 {!isCollapsed && (
                     <ul className="ml-10 mt-2 space-y-1 text-gray-700">
-                        <li className="cursor-pointer hover:text-blue-600">Add Education</li>
-                        <li className="cursor-pointer hover:text-blue-600">Education List</li>
+                        <Link to="/education/add">
+                        <li className="cursor-pointer hover:text-blue-600">Add Education</li>                        
+                        </Link>
+                        
+                        <Link to="/education/list">
+                        <li className="cursor-pointer hover:text-blue-600">Education List</li>                        
+                        </Link>
                     </ul>
                 )}
             </div>

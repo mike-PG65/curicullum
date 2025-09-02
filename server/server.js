@@ -1,6 +1,8 @@
 const express = require("express");
 const connectDb = require("./config/db");
 const dotenv = require("dotenv")
+const cors = require("cors");
+
 
 const app= express();
 const PORT= 4050
@@ -8,7 +10,7 @@ const PORT= 4050
 dotenv.config()
 
 app.use(express.json());
-
+app.use(cors());
 
 
 const runServer = async () => {
