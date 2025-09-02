@@ -140,9 +140,9 @@ const EducationList = () => {
 
   {/* Institution & Qualification */}
   <h3 className="text-lg font-semibold text-gray-900">{edu.institution}</h3>
-  <p className="text-sm text-gray-500">{edu.fieldOfStudy}</p>
   <p className="text-sm font-medium text-indigo-600">{edu.qualification}</p>
-
+  <p className="text-sm text-gray-500">{edu.fieldOfStudy}</p>
+  
   {/* Dates */}
   <p className="text-xs text-gray-400 mt-1">
     {formatDate(edu.startDate)} — {edu.endDate ? formatDate(edu.endDate) : "Present"}
